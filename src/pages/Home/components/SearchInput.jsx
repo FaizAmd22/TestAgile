@@ -3,15 +3,19 @@ import { useState } from 'react';
 import { Input, InputGroup, InputLeftElement, useColorMode } from '@chakra-ui/react';
 import { IoIosSearch } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addPage } from '../../../redux/slices/pageSlice';
 
 const SearchInput = () => {
     const { colorMode } = useColorMode();
     const [inputValue, setInputValue] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
+            dispatch(addPage(1))
             navigate(`/search?query=${encodeURIComponent(inputValue)}`);
         }
     };
