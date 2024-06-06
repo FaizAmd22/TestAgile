@@ -20,7 +20,7 @@ const LoadingScreen = () => {
     const [isShowBox1, setIsShowBox1] = useState(false)
     const [isShowIcon, setIsShowIcon] = useState(false)
     const { colorMode } = useColorMode();
-    
+
     useEffect(() => {
         setIsShowIcon(true)
         setIsShowIcon(false)
@@ -51,7 +51,7 @@ const LoadingScreen = () => {
                 />
             )}
             {!isShowIcon && (
-                <Image src={loading} h={{md:"80%", base:"50%"}} />
+                <Image src={loading} h={{ md: "80%", base: "50%" }} />
             )}
         </Flex>
     );

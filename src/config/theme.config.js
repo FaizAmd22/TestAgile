@@ -25,19 +25,6 @@ const theme = extendTheme({
         heading: "Limelight, sans-serif",
         body: "Poppins, sans-serif",
     }
-    //   components: {
-    //     Button: {
-    //       variants: {
-    //         solid: {
-    //           bg: 'primary.500',
-    //           color: 'white',
-    //           _hover: {
-    //             bg: 'primary.600',
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
 });
 
 export default theme;

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { MdLightMode } from "react-icons/md";
 import { MdNightlightRound } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { addPage } from "../redux/slices/pageSlice";
 
 const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode();
@@ -11,10 +13,11 @@ const Navbar = () => {
     const [showInput, setShowInput] = useState(false);
     const [isSliding, setIsSliding] = useState(false);
     const [inputValue, setInputValue] = useState('');
-
+    const dispatch = useDispatch()
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
+            dispatch(addPage(1))
             navigate(`/search?query=${encodeURIComponent(inputValue)}`);
         }
     };

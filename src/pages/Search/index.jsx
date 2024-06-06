@@ -1,38 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { API } from "../../api/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { addAllData, selectAllData } from "../../redux/slices/allDataSlice";
+import { useSelector } from "react-redux";
+import { selectAllData } from "../../redux/slices/allDataSlice";
 import { Box, Image } from "@chakra-ui/react";
 import Pagination from "./components/Pagination";
 import SearchCard from "./components/SearchCard";
 import loading from "../../assets/loading02.gif";
 import notFound from "../../assets/notFound.png"
-
-const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
-};
+import { useFetchDataHooks, useQuery } from "../../hooks/fetchAllData";
 
 const Search = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useDispatch();
-    const query = useQuery();
     const data = useSelector(selectAllData)
+    const { fetchAllData } = useFetchDataHooks()
+    const query = useQuery();
     const searchQuery = query.get('query') || "";
 
-    const fetchData = async () => {
-        const response = await API.get("/countries");
-        const data = response.data.data;
-        const dataFiltered = data.filter((item) =>
-            item.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        dispatch(addAllData(dataFiltered));
-    };
+    console.log(data);
 
     useEffect(() => {
         setIsLoading(true);
-        fetchData();
+        fetchAllData()
         setTimeout(() => {
             setIsLoading(false);
         }, 2000);

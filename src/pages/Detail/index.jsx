@@ -1,28 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Grid, GridItem, Image, Text, useColorMode } from "@chakra-ui/react"
-import { API } from "../../api/axios"
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
 import loading from "../../assets/loading02.gif"
-
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
+import { useSelector } from "react-redux"
+import { selectDetail } from "../../redux/slices/detailSlice"
+import { useFetchOneDataHooks } from "../../hooks/fetchOneData"
 
 const Detail = () => {
-  const [dataSelected, setDataSelected] = useState({})
-  const query = useQuery();
-  const searchQuery = query.get('query') || "";
+  const data = useSelector(selectDetail)
   const [isLoading, setIsLoading] = useState(false)
   const { colorMode } = useColorMode();
+  const {fetchData} = useFetchOneDataHooks()
 
-  const fetchData = async () => {
-    const response = await API.get("/countries")
-
-    const data = response.data.data
-    const filter = data.find((item) => item.name == searchQuery)
-    setDataSelected(filter)
-  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -79,11 +68,12 @@ const Detail = () => {
                 h="full"
                 display="flex"
                 alignItems="center"
-                justifyContent="center"
+                  justifyContent="center"
+                  className="animate__animated animate__zoomIn"
               >
-                {dataSelected.href && (
+                {data.href && (
                   <Image
-                    src={dataSelected.href.flag}
+                    src={data.href.flag}
                     w="80%"
                     h={{ base: "80%", md: "60%" }}
                   />
@@ -94,23 +84,24 @@ const Detail = () => {
                 colSpan={{ base: 6, md: 3 }}
                 display="flex"
                 flexDirection="column"
-                  justifyContent="center"
-                  margin={{ base: "auto", md: 0 }}
-                  fontSize="20px"
-                  gap={{base: 0, md: 3}}
+                justifyContent="center"
+                margin={{ base: "auto", md: 0 }}
+                fontSize="20px"
+                  gap={{ base: 0, md: 3 }}
+                  className="animate__animated animate__fadeIn animate__delay-0.5s"
               >
                 <Text
                   fontSize={{ base: "24px", md: "50px" }}
                   fontWeight="bold"
                 >
-                  {dataSelected.name}
+                  {data.name}
                 </Text>
-                <Text><span style={{ fontWeight: "bold" }}>Fullname :</span> {dataSelected.full_name}</Text>
-                <Text><span style={{ fontWeight: "bold" }}>Capital :</span> {dataSelected.capital}</Text>
-                <Text><span style={{ fontWeight: "bold" }}>Continent :</span> {dataSelected.continent}</Text>
-                <Text><span style={{ fontWeight: "bold" }}>Currency :</span> {dataSelected.currency}</Text>
-                <Text><span style={{ fontWeight: "bold" }}>Size :</span> {dataSelected.size}</Text>
-                <Text><span style={{ fontWeight: "bold" }}>Population :</span> {dataSelected.population}</Text>
+                <Text><span style={{ fontWeight: "bold" }}>Fullname :</span> {data.full_name}</Text>
+                <Text><span style={{ fontWeight: "bold" }}>Capital :</span> {data.capital}</Text>
+                <Text><span style={{ fontWeight: "bold" }}>Continent :</span> {data.continent}</Text>
+                <Text><span style={{ fontWeight: "bold" }}>Currency :</span> {data.currency}</Text>
+                <Text><span style={{ fontWeight: "bold" }}>Size :</span> {data.size}</Text>
+                <Text><span style={{ fontWeight: "bold" }}>Population :</span> {data.population}</Text>
               </GridItem>
             </Grid>
           </Box>
